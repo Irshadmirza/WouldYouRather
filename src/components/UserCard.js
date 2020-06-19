@@ -10,7 +10,7 @@ class UserCard extends Component {
                     <Label corner ='left' icon ='trophy'/>
                     <Card.Content className='leaderboard-card-content'>
                     <div style={{display:'flex',height:'110px',width:'20%',justifyContent:'center',alignItems:'center'}}>
-                        <Image src={user.avatarURL} size ='tiny' circular verticalAlign='middle' spaced='left'/>
+                        <Image src={user.avatar} size ='tiny' circular verticalAlign='middle' spaced='left'/>
                     </div>
                     <div style={{width:'60%',height:'110px'}}>
                         <div className='verticle-divider-leaderboard-left'></div>
@@ -22,7 +22,7 @@ class UserCard extends Component {
                             </div>
                             <div style={{display:'flex',flexDirection:'row',paddingTop:'5px'}}>
                                 <p style={{textAlign:'left',flex:'90%'}}>Created questions</p>
-                                <p style={{textAlign:'right',flex:'10%'}}>{user.createdQuestions}</p>
+                                <p style={{textAlign:'right',flex:'10%'}}>{user.questionsAsked}</p>
                             </div>
                         </Card.Content>
                         <div className='verticle-divider-leaderboard-right'></div>
@@ -31,7 +31,7 @@ class UserCard extends Component {
                         <Card centered style={{height:'110px'}}>
                             <Card.Header className='ui header' textAlign='center' style={{height:30,marginTop:8}}>Score</Card.Header>
                             <Card.Content style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
-                                <Label circular color='teal' size='huge'>{user.rank}</Label>
+                                <Label circular color='teal' size='huge'>{user.totalScore}</Label>
                             </Card.Content>
                         </Card>
                     </div>
