@@ -1,39 +1,44 @@
-import React, {Component} from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import UserCard from './UserCard'
 
-class LeaderBoard extends Component {
-    render() {
-        const {usersDetails} = this.props
-        return(
-            <div className='leaderboard-list-container'>
-                { usersDetails.map((user) => (
-                                <li key={user.name} >
-                                    <UserCard user={user}/>
-                                </li>
-                            ))}
-            </div>
-        )
-    }
-}
+const Leaderboard = (props) => {
+    const {users} = props;
 
-function mapStateToProps({users,}) {
-    const usersDetails = Object.keys(users)
-        .map((user) => {
-            const userCardDetails = {
-                name: users[user].name,
-                avatarURL: users[user].avatarURL,
-                questionsAnswered: Object.keys(users[user].answers).length,
-                createdQuestions: users[user].questions.length
-            }
-            const rank = userCardDetails.questionsAnswered + userCardDetails.createdQuestions
-            userCardDetails.rank = rank;
-            return(userCardDetails)
-        })
-        .sort((a,b) => (b.rank - a.rank))
+    let usersDetails = Object.keys(users).map((key, index) => {
+        let questionsAnswered = Object.keys(users[key].answers).length;
+        let questionsAsked = Object.keys(users[key].questions).length;
+
+        return {
+            'name': users[key].name,
+            'avatar': users[key].avatarURL,
+            'questionsAnswered': questionsAnswered,
+            'questionsAsked': questionsAsked,
+            'totalScore': questionsAnswered + questionsAsked
+        }
+    });
+
+    usersDetails.sort((a, b) => {
+        if (b.totalScore < a.totalScore) return -1;
+        if (b.totalScore > a.totalScore) return 1;
+        return 0;
+    });
+
+    return (
+        <div className='leaderboard-list-container'>
+        { usersDetails.map((user) => (
+                        <li key={user.name} >
+                            <UserCard user={user}/>
+                        </li>
+                    ))}
+    </div>
+    )
+};
+
+function mapStateToProps({users}) {
     return {
-        usersDetails
+        users
     }
 }
 
-export default connect (mapStateToProps)(LeaderBoard)
+export default connect(mapStateToProps)(Leaderboard);
